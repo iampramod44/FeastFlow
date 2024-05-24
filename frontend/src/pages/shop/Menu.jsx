@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
+<<<<<<< HEAD
 import Cards from "../../components/Cards";
 import { FaFilter } from "react-icons/fa";
+=======
+import Cards from '../../components/Cards'
+>>>>>>> aeff9762d60230d3d699c62dcec128b5deba78dc
 const Menu = () => {
   const [menu, setMenu] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
@@ -14,6 +18,7 @@ const Menu = () => {
         const data = await response.json();
         setMenu(data);
         setFilteredItems(data); //Initally display all items
+<<<<<<< HEAD
         // console.log(data);
       } catch (error) {
         console.log("error fetching");
@@ -21,6 +26,14 @@ const Menu = () => {
    
     };
        fetchData();
+=======
+        console.log(data);
+      } catch (error) {
+        console.log("error fetching");
+      }
+    };
+    fetchData();
+>>>>>>> aeff9762d60230d3d699c62dcec128b5deba78dc
   }, []);
 
   //filter data based on category
@@ -86,6 +99,7 @@ const Menu = () => {
       {/* Menu Shop Section */}
       <div className="section-container">
         {/* Filtering and Sorting */}
+<<<<<<< HEAD
         <div className="flex flex-col md:flex-row flex-wrap md:justify-between items-center space-y-8 mb-8">
           {/* All category button */}
           <div className=" flex flex-row justify-start md:items-center md:gap-8 gap-4 flex-wrap ">
@@ -152,6 +166,16 @@ const Menu = () => {
           {filteredItems.map((item) => (
             <Cards key={item._id} item={item} />
           ))}
+=======
+        <div>Filtering and Sorting</div>
+        {/* Product Card */}
+        <div>
+          {
+          filteredItems.map((item) => (
+          <Cards key={item._id} item={item}/>
+          ))
+          }
+>>>>>>> aeff9762d60230d3d699c62dcec128b5deba78dc
         </div>
       </div>
     </div>
