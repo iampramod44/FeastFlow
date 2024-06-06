@@ -16,7 +16,7 @@ const Cards = ({ item }) => {
     if (user && user?.email) {
       //?. syntax is called the optional chaining operator, which allows you to access nested properties of an object without causing an error if one of the intermediate properties is null or undefined.
       const cartItems = {
-        menuItemsId: _id,
+        menuItemId: _id,
         name,
         quantity: 1,
         image,

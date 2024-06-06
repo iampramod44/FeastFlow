@@ -165,6 +165,7 @@ const CartPage = () => {
                     <input
                       type="number"
                       value={item.quantity}
+                      onChange={()=> console.log(quantity)}
                       className="w-10 mx-2 text-center overflow-hidden appearance-none"
                     />
                     <button
