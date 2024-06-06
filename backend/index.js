@@ -1,10 +1,10 @@
 //iampramodkumar8888
 //iF0Yev4b1rbrLGaQ
+//2:25
 const express = require("express");
 const app = express();
 const cors = require("cors");
 const port = process.env.PORT || 6001;
-const usersRoutes = require("./routes/userRoutes");
 require("dotenv").config();
 
 //middleware
@@ -42,6 +42,7 @@ async function run() {
     });
 
     //all cart operations
+
     //posting cart to db
     app.post("/carts", async (req, res) => {
       const cartItem = req.body;
@@ -74,7 +75,7 @@ async function run() {
     });
 
     //update cart quantity using + and - button
-    app.put("/carts/:id", async (req, res) => {
+    app.put("/carts/:id",async(req,res)=>{
       const id = req.params.id; //This line gets the id parameter from the URL and assigns it to the id variable.
       const { quantity } = req.body; //This line extracts the quantity property from the request body and assigns it to the quantity variable.
       const filter = { _id: new ObjectId(id) }; //This line creates a filter object that will be used to identify the document to be updated in the database.
@@ -86,7 +87,7 @@ async function run() {
         },
       };
       const result = await cartCollection.updateOne(filter, updateDoc, options);
-    });
+    })
 
     await client.db("admin").command({ ping: 1 });
     console.log(
@@ -99,11 +100,9 @@ async function run() {
 }
 run().catch(console.dir);
 
-//routes
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
-app.use("/users", usersRoutes);
 
 app.listen(port, () => {
   console.log(`xample app listening on port ${port}`);
