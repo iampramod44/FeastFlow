@@ -1,12 +1,14 @@
 //iampramodkumar8888
 //GwO7DCAeNwBXn9xO old backend
+
+//2:01
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const jwt = require("jsonwebtoken");
 const port = process.env.PORT || 6001;
 const mongoose = require("mongoose");
 require("dotenv").config();
-
 //middleware
 app.use(cors());
 app.use(express.json());
@@ -19,11 +21,24 @@ mongoose
   .then(console.log("Connceted to mongodb"))
   .catch((error) => console.log("error connceting to mongodb"));
 
+//jwt config
+app.post("/jwt", async (req, res) => {
+  const user = req.body;
+  const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+    expiresIn: "1hr",
+  });
+  res.send({ token });
+});
+
+
+
 //   import routes here
 const menuRoutes = require("./api/routes/menuRoutes");
 const cartRoutes = require("./api/routes/cartRoutes");
+const userRoutes = require("./api/routes/userRoutes");
 app.use("/menu", menuRoutes);
 app.use("/carts", cartRoutes);
+app.use("/users", userRoutes);
 app.get("/", (req, res) => {
   res.send("Hwwello World!");
 });

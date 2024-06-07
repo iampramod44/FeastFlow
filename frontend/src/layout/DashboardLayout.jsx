@@ -70,7 +70,7 @@ const DashboardLayout = () => {
             <li>
               <Link to="/dashboard" className="flex justify-start mb-3">
                 <img src={logo} className="w-20" />
-                <span class="badge badge-primary">Admin</span>
+                <span className="badge badge-primary">Admin</span>
               </Link>
             </li>
             <hr />

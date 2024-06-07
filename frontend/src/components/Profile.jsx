@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../contexts/AuthProvider";
-
+import { Link } from "react-router-dom";
 const Profile = ({ user }) => {
   const { logOut } = useContext(AuthContext);
   const handleLogout = () => {
     logOut()
       .then(() => {
-     alert("SignOut Successful");
+        alert("SignOut Successful");
       })
       .catch((error) => {
         // An error happened.
@@ -26,10 +26,7 @@ const Profile = ({ user }) => {
               {user.photoURL ? (
                 <img src={user.photoURL} />
               ) : (
-                <img
-                  
-                  src="/profile.png"
-                />
+                <img src="/profile.png" />
               )}
             </div>
           </label>
@@ -47,6 +44,9 @@ const Profile = ({ user }) => {
             </li>
             <li>
               <a>Order</a>
+            </li>
+            <li>
+              <Link to="/dashboard">Dashboard</Link>
             </li>
             <li>
               <a>Setting</a>
