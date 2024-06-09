@@ -3,19 +3,28 @@ import { FaHeart } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
 import Swal from "sweetalert2";
-const Cards = ({ item }) => {
-  const { name, image, price, recipe, _id } = item; //Destructing the menuitems in items object
+import useCart from "../hooks/useCart";
+import axios from "axios";
 
-  const [isHeartFilled, setIsHeartFilled] = useState(false);
+const Cards = ({ item }) => {
+  const { name, image, price, recipe, _id } = item;
+
   const { user } = useContext(AuthContext);
+  const [cart, refetch] = useCart();
   const navigate = useNavigate();
   const location = useLocation();
+  // console.log(item)
+  const [isHeartFilled, setIsHeartFilled] = useState(false);
 
-  //add to card btn
-  const handleAddtoCart = (item) => {
-    if (user && user?.email) {
-      //?. syntax is called the optional chaining operator, which allows you to access nested properties of an object without causing an error if one of the intermediate properties is null or undefined.
-      const cartItems = {
+  const handleHeartClick = () => {
+    setIsHeartFilled(!isHeartFilled);
+  };
+
+  // add to cart handler
+  const handleAddToCart = (item) => {
+    // console.log(item);
+    if (user && user.email) {
+      const cartItem = {
         menuItemId: _id,
         name,
         quantity: 1,
@@ -23,46 +32,49 @@ const Cards = ({ item }) => {
         price,
         email: user.email,
       };
-      // console.log(cartItems);
-      fetch("http://localhost:6001/carts", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(cartItems),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          // console.log(data);
-          if (data.insertedId) {
+
+      axios
+        .post("http://localhost:6001/carts", cartItem)
+        .then((response) => {
+          console.log(response);
+          if (response) {
+            refetch(); // refetch cart
             Swal.fire({
-              position: "top-end",
+              position: "center",
               icon: "success",
-              title: "Your work has been saved",
+              title: "Food added on the cart.",
               showConfirmButton: false,
               timer: 1500,
             });
           }
+        })
+        .catch((error) => {
+          console.log(error.response.data.message);
+          const errorMessage = error.response.data.message;
+          Swal.fire({
+            position: "center",
+            icon: "warning",
+            title: `${errorMessage}`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
         });
     } else {
       Swal.fire({
-        title: "Please Login",
-        text: "Without an account can't able to add products",
+        title: "Please login to order the food",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Signup Now!",
+        confirmButtonText: "Login now!",
       }).then((result) => {
         if (result.isConfirmed) {
-          navigate("/signup", { state: { from: location } });
+          navigate("/login", { state: { from: location } });
         }
       });
     }
   };
-  const handleHeartClick = () => {
-    setIsHeartFilled(!isHeartFilled);
-  };
+
   return (
     <div
       to={`/menu/${item._id}`}
@@ -94,11 +106,9 @@ const Cards = ({ item }) => {
           <h5 className="font-semibold">
             <span className="text-sm text-red">$ </span> {item.price}
           </h5>
-
-          {/* //add to card div */}
           <button
+            onClick={() => handleAddToCart(item)}
             className="btn bg-green text-white"
-            onClick={() => handleAddtoCart(item)}
           >
             Add to Cart{" "}
           </button>
