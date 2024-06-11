@@ -30,14 +30,15 @@ const Login = () => {
         // Signed in
         const user = result.user;
         const userInfor = {
-          name: data.name,
           email: data.email,
         };
-        axios.post("/users", userInfor).then((response) => {
-          // console.log(response);
-          alert("Signin successful!");
-          navigate(from, { replace: true });
-        });
+        axios
+          .post("http://localhost:6001/users", userInfor)
+          .then((response) => {
+            // console.log(response);
+            alert("Signin successful!");
+            navigate(from, { replace: true });
+          });
         // console.log(user);
         // ...
       })

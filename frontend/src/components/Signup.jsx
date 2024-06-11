@@ -29,8 +29,8 @@ const Signup = () => {
         //Signed Up
         const user = result.user;
         updateUserProfile(data.email, data.photoURL).then(() => {
+          //passing these information to jwt route to generate token
           const userInfor = {
-            name: data.name,
             email: data.email,
           };
           axios
@@ -40,9 +40,6 @@ const Signup = () => {
               navigate(from, { replace: true });
             });
         });
-        alert("Account creation Successful");
-        document.getElementById("my_modal_5").close();
-        navigate(from, { replace: true });
       })
       .catch((error) => {
         const errorCode = error.code;

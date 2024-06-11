@@ -10,7 +10,7 @@ const CartPage = () => {
   const [cartItems, setcartItems] = useState([]);
 
   //calculate total quantity price in cart section price header
-  const calculatePrice = (item) => {
+  const calculateTotalPrice = (item) => {
     return item.price * item.quantity;
   };
 
@@ -76,10 +76,13 @@ const CartPage = () => {
   };
 
   //calculate total price of all products in carts
-  const cartSubTotal = cart.reduce((total, item) => {
-    return total + calculatePrice(item);
+  const cartSubtotal = cart.reduce((total, item) => {
+    return total + calculateTotalPrice(item);
   }, 0);
-  const orderTotal=cartSubTotal;
+
+  // Calculate the order total
+  const orderTotal = cartSubtotal;
+  // console.log(orderTotal)
 
   //handle delete btn
   const handleDelete = (item) => {
@@ -165,7 +168,7 @@ const CartPage = () => {
                     <input
                       type="number"
                       value={item.quantity}
-                      onChange={()=> console.log(quantity)}
+                      onChange={() => console.log(quantity)}
                       className="w-10 mx-2 text-center overflow-hidden appearance-none"
                     />
                     <button
@@ -175,7 +178,7 @@ const CartPage = () => {
                       +
                     </button>
                   </td>
-                  <td>${calculatePrice(item).toFixed(2)}</td>
+                  <td>${calculateTotalPrice(item).toFixed(2)}</td>
                   <th>
                     <button
                       className="btn btn-ghost text-red btn-xs"

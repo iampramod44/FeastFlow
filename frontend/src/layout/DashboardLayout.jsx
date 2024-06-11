@@ -38,6 +38,7 @@ const DashboardLayout = () => {
       </li>
     </>
   );
+  const isAdmin = false;
   return (
     <div>
       <div className="drawer sm:drawer-open">

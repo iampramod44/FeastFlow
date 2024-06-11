@@ -1,7 +1,5 @@
 //iampramodkumar8888
 //GwO7DCAeNwBXn9xO old backend
-
-//2:01
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -30,17 +28,16 @@ app.post("/jwt", async (req, res) => {
   res.send({ token });
 });
 
-
-
 //   import routes here
 const menuRoutes = require("./api/routes/menuRoutes");
 const cartRoutes = require("./api/routes/cartRoutes");
 const userRoutes = require("./api/routes/userRoutes");
+const verifyToken = require("./api/middleware/verifyToken");
 app.use("/menu", menuRoutes);
 app.use("/carts", cartRoutes);
 app.use("/users", userRoutes);
-app.get("/", (req, res) => {
-  res.send("Hwwello World!");
+app.get("/", verifyToken, (req, res) => {
+  res.send("Hw World!");
 });
 
 app.listen(port, () => {
