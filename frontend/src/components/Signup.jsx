@@ -4,7 +4,7 @@ import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import Modal from "./Modal";
 import { AuthContext } from "../contexts/AuthProvider";
-import axios from "axios";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 const Signup = () => {
   const {
@@ -15,7 +15,7 @@ const Signup = () => {
 
   const { createUser, updateUserProfile, signUpWithGmail } =
     useContext(AuthContext);
-
+  const axiosPublic = useAxiosPublic();
   //redirecting to homeepage or specific page
   const location = useLocation();
   const navigate = useNavigate();
@@ -33,12 +33,10 @@ const Signup = () => {
           const userInfor = {
             email: data.email,
           };
-          axios
-            .post("http://localhost:6001/users", userInfor)
-            .then((response) => {
-              alert("signin successfully");
-              navigate(from, { replace: true });
-            });
+          axiosPublic.post("/users", userInfor).then((response) => {
+            alert("signin successfully");
+            navigate(from, { replace: true });
+          });
         });
       })
       .catch((error) => {
@@ -55,13 +53,11 @@ const Signup = () => {
           name: result?.user?.displayName,
           email: result?.user?.email,
         };
-        axios
-          .post("http://localhost:6001/users", userInfor)
-          .then((response) => {
-            // console.log(response);
-            alert("Signin successful!");
-            navigate("/");
-          });
+        axiosPublic.post("/users", userInfor).then((response) => {
+          // console.log(response);
+          alert("Signin successful!");
+          navigate("/");
+        });
       })
       .catch((error) => console.log(error));
   };
