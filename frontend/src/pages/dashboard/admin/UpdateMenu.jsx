@@ -1,11 +1,14 @@
 import React from "react";
+import { useLoaderData } from "react-router-dom";
+import Swal from "sweetalert2";
 import { FaUtensils } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import Swal from "sweetalert2";
 
-const AddMenu = () => {
+const UpdateMenu = () => {
+  const item = useLoaderData();
+  console.log(item);
   const { register, handleSubmit, reset } = useForm();
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
@@ -44,10 +47,11 @@ const AddMenu = () => {
       }
     }
   };
+
   return (
     <div className="w-full md:w-[870px] px-4 mx-auto">
       <h2 className="text-2xl font-semibold my-4">
-        Upload A New <span className="text-green">Menu Item</span>
+        Update This <span className="text-green">Menu Item</span>
       </h2>
 
       {/* form here */}
@@ -59,6 +63,7 @@ const AddMenu = () => {
             </label>
             <input
               type="text"
+              defaultValue={item.name}
               {...register("name", { required: true })}
               placeholder="Recipe Name"
               className="input input-bordered w-full"
@@ -125,7 +130,7 @@ const AddMenu = () => {
           </div>
 
           <button className="btn bg-green text-white px-6">
-            Add Item <FaUtensils />
+            Update Item <FaUtensils />
           </button>
         </form>
       </div>
@@ -133,4 +138,4 @@ const AddMenu = () => {
   );
 };
 
-export default AddMenu;
+export default UpdateMenu;
